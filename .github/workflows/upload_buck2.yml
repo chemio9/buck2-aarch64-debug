@@ -60,11 +60,11 @@ jobs:
         with:
           prefix-key: buck2-upload
           key: ${{ matrix.target.triple }}
-      - uses: actions-rs/install@v0.1
-        if: matrix.target.cross
+      - uses: nttld/setup-ndk@v1
+        id: setup-ndk
         with:
-          crate: cross
-          version: latest
+          ndk-version: r26d
+          link-to-sdk: true
       - name: Set variables
         id: set_variables
         shell: bash
@@ -84,11 +84,7 @@ jobs:
           #   export JEMALLOC_SYS_WITH_LG_PAGE=16
           # fi
 
-          if [ -n "${{ matrix.target.cross }}" ]; then
-            CARGO=cross
-          else
-            CARGO=cargo
-          fi
+          CARGO=cargo
           $CARGO build --bin buck2 --keep-going --bin rust-project --target ${{ matrix.target.triple }}
       - name: Sanity check with examples/with_prelude
         if: ${{ !matrix.target.cross }}
