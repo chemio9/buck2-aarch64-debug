@@ -89,6 +89,17 @@ jobs:
           #   export JEMALLOC_SYS_WITH_LG_PAGE=16
           # fi
 
+          export ANDROID_NDK=${{ steps.setup-ndk.outputs.ndk-path }}
+          export CC=${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang++
+          export AR=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ar
+          export TARGET_CC=$CC
+          export CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER=$CC
+          export CARGO_TARGET_AARCH64_LINUX_ANDROID_AR=$AR
+
+          # 一般配置 CC, AR 即可，如出现问题再将以下3条加上：
+          # export TARGET_CC=$CC
+          # export CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER=$CC
+          # export CARGO_TARGET_AARCH64_LINUX_ANDROID_AR=$AR
           CARGO=cargo
           $CARGO build --bin buck2 --keep-going --bin rust-project --target ${{ matrix.target.triple }}
       - name: Sanity check with examples/with_prelude
