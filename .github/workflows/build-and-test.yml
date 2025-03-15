@@ -1,11 +1,9 @@
 name: Build and test
 on:
-  push:
-  pull_request:
   workflow_dispatch: # allows manual triggering
 jobs:
   linux-build-and-test:
-    runs-on: 4-core-ubuntu
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v4.1.0
     - uses: ./.github/actions/setup_linux_env
