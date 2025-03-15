@@ -1,0 +1,10 @@
+/target/
+Cargo.lock
+buck-out
+/.direnv
+
+# symlinks
+/examples/with_prelude/prelude
+/examples/with_prelude/third-party/ocaml/opam
+/examples/with_prelude/third-party/haskell/ghc
+/examples/with_prelude/third-party/ocaml/standard_library

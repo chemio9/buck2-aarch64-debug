@@ -1,0 +1,80 @@
+load("@fbcode_macros//build_defs:rust_library.bzl", "rust_library")
+load("@fbcode_macros//build_defs:rust_linkable_symbol.bzl", "rust_linkable_symbol")
+
+oncall("build_infra")
+
+rust_library(
+    name = "buck2_forkserver",
+    srcs = glob(
+        ["src/**/*.rs"],
+    ),
+    os_deps = [
+        (
+            "linux",
+            [
+                "fbsource//third-party/rust:nix",
+                "fbsource//third-party/rust:rand",
+                "//buck2/app/buck2_grpc:buck2_grpc",
+                "//buck2/app/buck2_util:buck2_util",
+                ":buck2_miniperf_data",
+            ],
+        ),
+        (
+            "macos",
+            [
+                "fbsource//third-party/rust:nix",
+                "fbsource//third-party/rust:rand",
+                "//buck2/app/buck2_grpc:buck2_grpc",
+                "//buck2/app/buck2_util:buck2_util",
+            ],
+        ),
+        (
+            "windows",
+            [
+                "fbsource//third-party/rust:winapi",
+                "//buck2/app/buck2_wrapper_common:buck2_wrapper_common",
+            ],
+        ),
+    ],
+    test_deps = [
+        "fbsource//third-party/rust:assert_matches",
+        "fbsource//third-party/rust:sysinfo",
+        "fbsource//third-party/rust:tempfile",
+        "fbsource//third-party/rust:tokio-stream",
+    ],
+    test_os_deps = [
+        (
+            "windows",
+            [
+                "//buck2/app/buck2_util:buck2_util",
+            ],
+        ),
+    ],
+    deps = [
+        "fbsource//third-party/rust:arc-swap",
+        "fbsource//third-party/rust:async-trait",
+        "fbsource//third-party/rust:bincode",
+        "fbsource//third-party/rust:bytes",
+        "fbsource//third-party/rust:futures",
+        "fbsource//third-party/rust:libc",
+        "fbsource//third-party/rust:pin-project",
+        "fbsource//third-party/rust:take_mut",
+        "fbsource//third-party/rust:tokio",
+        "fbsource//third-party/rust:tokio-util",
+        "fbsource//third-party/rust:tonic",
+        "fbsource//third-party/rust:tracing",
+        "//buck2/allocative/allocative:allocative",
+        "//buck2/app/buck2_common:buck2_common",
+        "//buck2/app/buck2_core:buck2_core",
+        "//buck2/app/buck2_data:buck2_data",
+        "//buck2/app/buck2_error:buck2_error",
+        "//buck2/app/buck2_forkserver_proto:buck2_forkserver_proto",
+        "//buck2/app/buck2_miniperf_proto:buck2_miniperf_proto",
+        "//buck2/gazebo/dupe:dupe",
+    ],
+)
+
+rust_linkable_symbol(
+    name = "buck2_miniperf_data",
+    content_bytes = "//buck2/app/buck2_miniperf:buck2_miniperf",
+)

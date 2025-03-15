@@ -1,0 +1,46 @@
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under both the MIT license found in the
+ * LICENSE-MIT file in the root directory of this source tree and the Apache
+ * License, Version 2.0 found in the LICENSE-APACHE file in the root directory
+ * of this source tree.
+ */
+
+use buck2_node::attrs::attr_type::one_of::OneOfAttrType;
+use buck2_node::attrs::coerced_attr::CoercedAttr;
+use buck2_node::attrs::coercion_context::AttrCoercionContext;
+use buck2_node::attrs::configurable::AttrIsConfigurable;
+use gazebo::prelude::SliceExt;
+use starlark::values::Value;
+
+use crate::attrs::coerce::attr_type::ty_maybe_select::TyMaybeSelect;
+use crate::attrs::coerce::attr_type::AttrTypeExt;
+use crate::attrs::coerce::error::CoercionError;
+use crate::attrs::coerce::AttrTypeCoerce;
+
+impl AttrTypeCoerce for OneOfAttrType {
+    fn coerce_item(
+        &self,
+        configurable: AttrIsConfigurable,
+        ctx: &dyn AttrCoercionContext,
+        value: Value,
+    ) -> buck2_error::Result<CoercedAttr> {
+        let mut errs = Vec::new();
+        // Bias towards the start of the list - try and use success/failure from first in preference
+        for (i, x) in self.xs.iter().enumerate() {
+            match x.coerce_item(configurable, ctx, value) {
+                Ok(v) => return Ok(CoercedAttr::OneOf(Box::new(v), i as u32)),
+                Err(e) => {
+                    // TODO(nga): anyhow error creation is expensive.
+                    errs.push(e)
+                }
+            }
+        }
+        Err(CoercionError::one_of_many(errs).into())
+    }
+
+    fn starlark_type(&self) -> TyMaybeSelect {
+        TyMaybeSelect::Union(self.xs.map(|x| x.starlark_type()))
+    }
+}

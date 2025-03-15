@@ -1,0 +1,32 @@
+load("@fbcode//buck2:proto_defs.bzl", "rust_protobuf_library")
+load("@fbcode//grpc_fb/codegen:buck_macros.bzl", "grpc_library")
+load("@fbcode_macros//build_defs:export_files.bzl", "export_file")
+
+oncall("build_infra")
+
+rust_protobuf_library(
+    name = "buck2_subscription_proto",
+    srcs = glob(["src/**/*.rs"]),
+    build_script = "build.rs",
+    protos = ["subscription.proto"],
+    deps = [
+        "fbsource//third-party/rust:derive_more",
+        "fbsource//third-party/rust:serde",
+        "fbsource//third-party/rust:tonic",
+        "//buck2/allocative/allocative:allocative",
+    ],
+)
+
+grpc_library(
+    name = "subscription",
+    srcs = [
+        "subscription.proto",
+    ],
+    languages = [
+        "py",
+    ],
+)
+
+export_file(
+    name = "subscription.proto",
+)

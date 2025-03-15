@@ -1,0 +1,36 @@
+[package]
+edition = "2021"
+license = { workspace = true }
+name = "buck2_test_api"
+repository = { workspace = true }
+version = "0.1.0"
+
+[dependencies]
+allocative = { workspace = true }
+anyhow = { workspace = true }
+async-trait = { workspace = true }
+derivative = { workspace = true }
+derive_more = { workspace = true }
+futures = { workspace = true }
+prost-types = { workspace = true }
+tokio = { workspace = true }
+tonic = { workspace = true }
+tower-layer = { workspace = true }
+tower-service = { workspace = true }
+tracing = { workspace = true }
+
+dupe = { workspace = true }
+gazebo = { workspace = true }
+host_sharing = { workspace = true }
+sorted_vector_map = { workspace = true }
+
+buck2_core = { workspace = true }
+buck2_downward_api = { workspace = true }
+buck2_downward_api_proto = { workspace = true }
+buck2_error = { workspace = true }
+buck2_events = { workspace = true }
+buck2_grpc = { workspace = true }
+buck2_test_proto = { workspace = true }
+
+[dev-dependencies]
+assert_matches = { workspace = true }

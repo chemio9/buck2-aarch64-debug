@@ -1,0 +1,18 @@
+[package]
+edition = "2021"
+license = { workspace = true }
+name = "buck2_grpc"
+repository = { workspace = true }
+version = "0.1.0"
+
+[dependencies]
+anyhow = { workspace = true }
+futures = { workspace = true }
+http = { workspace = true }
+pin-project = { workspace = true }
+tokio = { workspace = true }
+tonic = { workspace = true }
+tower = { workspace = true }
+
+[dev-dependencies]
+assert_matches = { workspace = true }

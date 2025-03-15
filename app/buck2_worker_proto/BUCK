@@ -1,0 +1,24 @@
+load("@fbcode//buck2:proto_defs.bzl", "rust_protobuf_library")
+load("@fbcode//grpc_fb/codegen:buck_macros.bzl", "grpc_library")
+
+oncall("build_infra")
+
+rust_protobuf_library(
+    name = "buck2_worker_proto",
+    srcs = glob(["src/**/*.rs"]),
+    build_script = "build.rs",
+    protos = ["worker.proto"],
+    deps = [
+        "fbsource//third-party/rust:tonic",
+    ],
+)
+
+grpc_library(
+    name = "worker",
+    srcs = [
+        "worker.proto",
+    ],
+    languages = [
+        "py",
+    ],
+)

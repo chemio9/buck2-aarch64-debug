@@ -1,0 +1,14 @@
+[package]
+edition = "2021"
+license = { workspace = true }
+name = "buck2_protoc_dev"
+repository = { workspace = true }
+version = "0.1.0"
+
+[dependencies]
+dunce = { workspace = true }
+protoc-bin-vendored = { workspace = true }
+tonic-build = { workspace = true }
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ["cfg(buck2_build)"] }

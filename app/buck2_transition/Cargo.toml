@@ -1,0 +1,31 @@
+[package]
+description = "Implementation of configuration transition"
+edition = "2021"
+license = { workspace = true }
+name = "buck2_transition"
+repository = { workspace = true }
+version = "0.1.0"
+
+[dependencies]
+async-trait = { workspace = true }
+derive_more = { workspace = true }
+either = { workspace = true }
+itertools = { workspace = true }
+ref-cast = { workspace = true }
+
+allocative = { workspace = true }
+dice = { workspace = true }
+dupe = { workspace = true }
+gazebo = { workspace = true }
+starlark = { workspace = true }
+starlark_map = { workspace = true }
+
+buck2_analysis = { workspace = true }
+buck2_build_api = { workspace = true }
+buck2_build_api_derive = { workspace = true }
+buck2_core = { workspace = true }
+buck2_error = { workspace = true }
+buck2_events = { workspace = true }
+buck2_futures = { workspace = true }
+buck2_interpreter = { workspace = true }
+buck2_node = { workspace = true }
