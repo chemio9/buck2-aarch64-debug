@@ -68,8 +68,7 @@ jobs:
       - name: print ndk info
         shell: bash
         run: |
-          find $ANDROID_HOME -type f -name 'aarch64-*' || true
-          find ${{ steps.setup-ndk.outputs.ndk-path }} -type f -name 'aarch64-*' || true
+          find ${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/linux-x86_64/bin/ -type f || true
 
       - name: Set variables
         id: set_variables
