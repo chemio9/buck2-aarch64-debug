@@ -28,7 +28,7 @@ impl UnixSystemStats {
         })
     }
 
-    #[cfg(not(unix))]
+    #[cfg(any(not(unix), target_os = "android"))]
     pub fn get() -> Option<Self> {
         None
     }
