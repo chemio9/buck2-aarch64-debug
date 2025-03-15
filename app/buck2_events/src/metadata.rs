@@ -128,6 +128,12 @@ fn os_version() -> Option<String> {
     sys_info::os_release().ok()
 }
 
+#[cfg(target_os = "android")]
+fn os_version() -> Option<String> {
+    // TODO: Android sys version
+    Ok("Android")
+}
+
 pub fn hostname() -> Option<String> {
     static CELL: OnceLock<Option<String>> = OnceLock::new();
 
