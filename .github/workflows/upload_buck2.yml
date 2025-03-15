@@ -38,6 +38,9 @@ jobs:
           - os: 'ubuntu-22.04'
             triple: 'aarch64-unknown-linux-musl'
             cross: true
+          - os: 'ubuntu-22.04'
+            triple: 'aarch64-linux-android'
+            cross: true
     runs-on: ${{ matrix.target.os }}
 
     steps:
