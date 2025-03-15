@@ -131,7 +131,7 @@ fn os_version() -> Option<String> {
 #[cfg(target_os = "android")]
 fn os_version() -> Option<String> {
     // TODO: Android sys version
-    Ok("Android")
+    Some(String::from("Android"))
 }
 
 pub fn hostname() -> Option<String> {
