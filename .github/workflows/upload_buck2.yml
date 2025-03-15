@@ -89,7 +89,7 @@ jobs:
           else
             CARGO=cargo
           fi
-          $CARGO build --bin buck2 --bin rust-project --target ${{ matrix.target.triple }}
+          $CARGO build --bin buck2 --keep-going --bin rust-project --target ${{ matrix.target.triple }}
       - name: Sanity check with examples/with_prelude
         if: ${{ !matrix.target.cross }}
         shell: bash
@@ -126,4 +126,3 @@ jobs:
         with:
           tag: "latest"
           github_token: ${{ github.token }}
-
