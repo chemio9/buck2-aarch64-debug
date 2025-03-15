@@ -14,7 +14,7 @@ pub struct UnixSystemStats {
 }
 
 impl UnixSystemStats {
-    #[cfg(unix)]
+    #[cfg(all(unix, not(target_os = "android")))]
     pub fn get() -> Option<Self> {
         let mut loadavg: [f64; 3] = [0.0, 0.0, 0.0];
         if unsafe { libc::getloadavg(&mut loadavg[0], 3) } != 3 {
